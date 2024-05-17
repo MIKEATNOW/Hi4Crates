@@ -1,0 +1,83 @@
+package kr.or.ddit.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.ServiceResult;
+import kr.or.ddit.mapper.MainChartMapper;
+import kr.or.ddit.service.IMainChartService;
+import kr.or.ddit.vo.ChartVO;
+import kr.or.ddit.vo.MedicineVO;
+import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.OrderVO;
+
+@Service
+public class MainChartServiceImpl implements IMainChartService {
+	
+	@Inject
+	MainChartMapper mapper;
+
+	@Override
+	public List<MemberVO> getWatingList(int empNo) {
+		
+		return mapper.getWatingList(empNo);
+	}
+
+	@Override
+	public List<ChartVO> getPatientChart(int memNo) {
+		
+		return mapper.getPatientChart(memNo);
+	}
+
+	@Override
+	public MemberVO patientPreview(int memNo) {
+		return mapper.patientPreview(memNo);
+	}
+
+	@Override
+	public ServiceResult orderRadiation(OrderVO orderVO) {
+		
+		ServiceResult result=null;
+		
+		int status = mapper.orderRadiation(orderVO);
+		
+		if(status>0) {
+			result=ServiceResult.OK;
+		}else {
+			result=ServiceResult.FAILED;
+		}
+		return result;
+		
+		
+	}
+
+	@Override
+	public ServiceResult createChart(ChartVO chartVO) {
+		
+		ServiceResult result = null;
+		
+		int status = mapper.createChart(chartVO);
+		
+		if(status>0) {
+			result=ServiceResult.OK;
+		}else {
+			result=ServiceResult.FAILED;
+		}
+		return result;
+	}
+
+	@Override
+	public List<MedicineVO> getMedicineList(int chartNo) {
+		
+		return mapper.getMedicineList(chartNo);
+	}
+
+
+
+
+
+}

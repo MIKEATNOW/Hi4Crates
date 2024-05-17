@@ -1,0 +1,25 @@
+package kr.or.ddit.controller;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+/**
+ * 충돌 
+ * @author PC-05
+ *
+ */
+<<<<<<< .mine
+// test11 asdsadasdasads RALajsrlkjaslkrj
+||||||| .r404438
+=======
+// test11 
+>>>>>>> .r404440
+@Controller
+public class HomeController {
+	
+	@GetMapping("/home")
+	public String goHome() {
+		
+		return "/patient/home";
+	}
+}

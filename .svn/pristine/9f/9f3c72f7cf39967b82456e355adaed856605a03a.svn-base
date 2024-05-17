@@ -1,0 +1,65 @@
+package kr.or.ddit.controller.nurse;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import kr.or.ddit.service.INurseService;
+import kr.or.ddit.vo.BedVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/nurse")
+@Slf4j
+public class NurseController {
+	
+	@Inject
+	private INurseService nurseService;
+	
+	// 간호사 메인 페이지
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public String nursePage(Model model) {
+		log.info("nurse main!!!");
+		
+		// 병실 상태 조회
+		// List<BedVO> bedList = nurseService.getBedList();
+		
+		
+		return "nurse/nurseMain";
+	}
+	
+	// 입원 페이지
+	@RequestMapping(value = "/hospitalization", method = RequestMethod.GET)
+	public String hospitalizationPage(Model model) {
+		
+		// 입원환자 리스트 가져오기
+		
+		// 입원환자 리스트 model에 담기
+		
+		return "nurse/hospitalizationPage";
+	}
+	
+	// 의약품 조회 페이지
+	@RequestMapping(value = "/medicineList", method = RequestMethod.GET)
+	public String medicineListPage() {
+		
+		// 의약품 리스트 가져오기
+		
+		// 의약품 리스트 model에 담기
+		
+		return "nurse/medicineList";
+	}
+	
+	// 의약품 신청 페이지
+	@RequestMapping(value = "/medicineApplication", method = RequestMethod.GET)
+	public String medicineApplicationPage() {
+		
+		
+		return "nurse/medicineApplication";
+	}
+}

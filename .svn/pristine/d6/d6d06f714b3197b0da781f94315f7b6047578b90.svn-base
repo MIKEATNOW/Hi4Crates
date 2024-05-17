@@ -1,0 +1,11 @@
+package kr.or.ddit.mapper;
+
+import kr.or.ddit.vo.MemberVO;
+
+public interface IMainAdminMapper {
+
+	//원무과 회원 등록
+	void enrollMember(MemberVO member);
+	
+
+}

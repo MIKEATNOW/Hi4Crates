@@ -1,0 +1,12 @@
+package kr.or.ddit.vo;
+
+import lombok.Data;
+
+@Data
+public class WorkHistoryVO {
+	private int workHistoryNo;
+	private String workStartTime;
+	private String workEndTime;
+	private String workHistoryDate;
+	private int empNo;
+}

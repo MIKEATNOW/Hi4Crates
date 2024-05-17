@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 마이바티스 홈페이지에서 Exploring Mapped SQL Statements 의 dtd  -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="kr.or.ddit.mapper.ICalendarMapper">
+	<select id="getData" resultType="calendarVO">
+		select
+			calendar_key id ,
+		    calendar_title title,
+		    calendar_startdate "START",
+		    calendar_enddate "END",
+		    calendar_allday allDay
+		from calendar
+	</select>
+	
+	<insert id="insertEvent" parameterType="calendarVO">
+		insert into calendar (
+			calendar_key,
+		    calendar_title,
+		    calendar_startdate,
+		    calendar_enddate,
+		    calendar_allday,
+		    emp_no
+		) values (
+			CALENDAR_SEQ.NEXTVAL, 
+			#{calendarTitle},
+			#{calendarStartDate},
+			#{calendarEndDate},
+			#{calendarAllDay},
+			'1'
+		)
+	</insert>
+	
+	<update id="updateEvent" parameterType="calendarVO">
+		update calendar
+		set
+			calendar_title = #{calendarTitle},
+			calendar_startdate = #{calendarStartDate},
+			calendar_enddate = #{calendarEndDate},
+			calendar_allday = #{calendarAllDay}
+		where calendar_key = #{calendarKey}
+	</update>
+	
+	<delete id="deleteEvent" parameterType="string">
+		delete from calendar
+		where calendar_key = #{calendarKey}
+	</delete>
+</mapper>

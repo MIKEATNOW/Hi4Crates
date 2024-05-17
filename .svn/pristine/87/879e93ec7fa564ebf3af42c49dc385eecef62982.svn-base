@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.MainChartMapper">
+
+	
+	<resultMap type="chartVO" id="patientChartMap">
+		<id property="chartNo" column="chart_no"/>
+		<result property="chartDate" column="chart_date"/>
+		<result property="chartRecord" column="chart_record"/>
+		<result property="disNo" column="dis_no"/>
+		<result property="disNameEn" column="dis_name_en"/>
+		<result property="disNameKr" column="dis_name_kr"/>
+	</resultMap>
+
+	
+
+	<select id="getWatingList" parameterType="int" resultType="memberVO">
+	
+	select m.mem_no, m.mem_name, m.mem_gender, m.mem_age, m.mem_regno1, m.mem_tel, c.code_name, cc.code_name as ccodeName
+	from member m, patient p, receipt r, history h, common_code c, common_code cc
+	where 
+			m.mem_no = p.mem_no 
+			and r.receipt_status = 'RS001' 
+			and p.patnt_no = r.patnt_no
+			and h.receipt_no = r.receipt_no
+			and c.code_no = history_loc
+            and cc.code_no = history_status
+			and r.emp_no = #{empNo}
+	</select>
+	
+	<select id="getPatientChart" parameterType="int" resultMap="patientChartMap">
+	select c.chart_date, c.chart_record, ds.dis_no, ds.dis_name_en, ds.dis_name_kr
+    from member m, chart c, diagnosis d, disease ds, patient p
+    where 
+        c.patnt_no=p.patnt_no
+        and d.chart_no=c.chart_no
+        and d.dis_no = ds.dis_no
+        and m.mem_no=#{memNo}
+	</select>
+	
+	<select id="patientPreview" parameterType="int" resultType="memberVO">
+	    select m.mem_no, m.mem_name, m.mem_gender, m.mem_age, m.mem_regno1, m.mem_tel, c.code_name, cc.code_name as ccodeName
+		from member m, patient p, receipt r, history h, common_code c, common_code cc
+		where 
+			m.mem_no = p.mem_no 
+			and r.receipt_status = 'RS001' 
+			and p.patnt_no = r.patnt_no
+			and h.receipt_no = r.receipt_no
+			and c.code_no = history_loc
+            and cc.code_no = history_status
+			and m.mem_no = #{memNo}
+	
+	</select>
+
+
+
+</mapper>

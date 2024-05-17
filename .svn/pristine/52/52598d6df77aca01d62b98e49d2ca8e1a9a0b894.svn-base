@@ -1,0 +1,17 @@
+package kr.or.ddit.service;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.vo.ChartVO;
+import kr.or.ddit.vo.MemberVO;
+
+public interface IMainChartService {
+
+	public List<MemberVO> getWatingList(int empNo);
+
+	public List<ChartVO> getPatientChart(int memNo);
+
+	public MemberVO patientPreview(int memNo);
+
+}

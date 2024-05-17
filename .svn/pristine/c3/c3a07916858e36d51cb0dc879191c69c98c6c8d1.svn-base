@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.ICalendarMapper">
+
+	<insert id="insertEvent" parameterType="calendarVO">
+		<selectKey keyProperty="calendarKey" resultType="int" order="BEFORE">
+			select calendar_SEQ.nextval from dual
+		</selectKey>
+	
+		INSERT INTO calendar (
+		    calendar_key
+		    ,calendar_title
+		    ,calendar_content
+		    ,calendar_startdate
+		    ,calendar_enddate
+		    ,calendar_allday
+		    ,calendar_color
+		    ,calendar_cate
+		    ,emp_no
+		) VALUES (
+		    #{calendarKey}
+		    ,#{calendarTitle}
+		    ,#{calendarContent}
+		    ,#{calendarStartDate}
+		    ,#{calendarEndDate}
+		    ,#{calendarAllDay}
+		    ,#{calendarColor}
+		    ,#{calendarCate}
+		    ,#{empNo}
+		)
+		
+	</insert>
+
+</mapper>

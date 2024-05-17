@@ -1,0 +1,74 @@
+package kr.or.ddit.controller.admin;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import kr.or.ddit.service.IMypageService;
+import kr.or.ddit.vo.DoctorCareerVO;
+import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.RealmVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class ProfileController {
+	@Inject
+	private IMypageService mypageService; 
+	
+	@Inject
+	private PasswordEncoder pe;
+	
+	@GetMapping("/myprofile/{memNo}")
+	public String myProfile(@PathVariable int memNo, Model model) {
+		MemberVO member = new MemberVO();
+		
+		member = mypageService.getMyInfo(memNo);
+		
+		
+		
+//		member = mypageService.getMemInfo(memNo);
+//		List<RealmVO> realmList = mypageService.getMyRealm(memNo);
+		List<DoctorCareerVO> careerList = mypageService.getMyCareer(memNo);
+		
+		model.addAttribute("member", member);
+//		model.addAttribute("realmList", realmList);
+		model.addAttribute("careerList", careerList);
+		return "main/admin/myinfo";
+	}
+	
+	@GetMapping("/mypage/{memNo}")
+	public String viewMyInfo(@PathVariable int memNo, Model model) {
+		MemberVO member = new MemberVO();
+		member = mypageService.getMyInfo(memNo);
+		model.addAttribute("member", member);
+		return "main/admin/myinfo";
+	}
+	
+	@ResponseBody
+	@PostMapping("/public/pwchk.do")
+	public ResponseEntity<String> passwordCheck(@RequestBody Map<String, Object> map, HttpSession session){		
+		String memPw = (String) map.get("memPw");
+		String memPw2 = (String) map.get("memPw2");
+		boolean isMatched = BCrypt.checkpw(memPw, memPw2);
+		if(isMatched) return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+		else if(!isMatched) return new ResponseEntity<String>("FAILED", HttpStatus.OK);
+		return new ResponseEntity<String>("FAILED", HttpStatus.OK);
+		
+	}
+}

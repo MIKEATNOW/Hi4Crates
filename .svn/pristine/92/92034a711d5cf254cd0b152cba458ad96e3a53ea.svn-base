@@ -1,0 +1,19 @@
+package kr.or.ddit.mapper;
+
+import java.util.HashMap;
+
+import kr.or.ddit.vo.MemberVO;
+
+public interface MemberMapper {
+
+	public int signup(MemberVO tm);
+
+	public int checkId(String checkId);
+
+	public MemberVO readByUserId(String username);
+
+	public MemberVO find(String memId);
+
+	public int kakaoInsert(MemberVO kakaoMember);
+
+}

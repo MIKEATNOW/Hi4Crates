@@ -1,0 +1,14 @@
+package kr.or.ddit.service;
+
+import javax.servlet.http.HttpServletRequest;
+
+import kr.or.ddit.ServiceResult;
+import kr.or.ddit.vo.MemberVO;
+
+public interface ILoginService {
+
+	ServiceResult signup(MemberVO tm, HttpServletRequest req);
+
+	ServiceResult checkId(String checkId);
+
+}

@@ -1,0 +1,26 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
+
+@Data
+public class ChartVO {
+	
+	private int chartNo;
+	
+	private Date chartDate;
+	private String chartRecord;
+	private int receiptNo;
+	private int patntNo;
+	
+	//상병가져오기 위한 컬럼추가
+	private String disNo;
+	private String disNameEn;
+	private String disNameKr;
+	
+	// 의사이름 가져오기
+	private String memName;	
+}

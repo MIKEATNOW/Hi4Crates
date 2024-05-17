@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.RadiationMapper">
+
+	<select id="getCommentList" resultType="commentVO">
+		select 
+			comment_no, comment_content, comment_sequence
+		from mic_comment
+		order by comment_sequence asc
+	</select>
+	
+	<select id="getRadiationRoomList" resultType="radiationRoomVO">
+		select
+			roc_no, roc_name, roc_status
+		from roc
+	</select>
+	
+	<select id="getRadiationRoomInfo" parameterType="int" resultType="radiationRoomVO">
+		select
+			roc_no, roc_name, roc_status
+		from roc
+		where roc_no = #{roomNo}
+	</select>
+	
+	<select id="getEqList" resultType="equipmentVO">
+		SELECT 
+		    m.eq_no, m.eq_name, m.eq_company, m.eq_model, 
+		    loc.code_name AS eq_loc_name, 
+		    status.code_name AS eq_status_name
+		FROM 
+		    medical_equip m
+		    JOIN common_code loc ON m.eq_loc = loc.code_no
+		    JOIN common_code status ON m.eq_status = status.code_no
+		WHERE 
+		    m.eq_loc IN ('LOC010', 'LOC011')
+		order by eq_no asc
+	</select>
+	
+	<select id="getEqInfo" parameterType="int" resultType="equipmentVO">
+		SELECT 
+		    m.eq_no, m.eq_name, m.eq_company, m.eq_model, 
+		    loc.code_name AS eq_loc_name, 
+		    status.code_name AS eq_status_name,
+		    eq.eq_description_content as eq_description_content
+		FROM 
+		    medical_equip m
+		    JOIN common_code loc ON m.eq_loc = loc.code_no
+		    JOIN common_code status ON m.eq_status = status.code_no
+		    JOIN equipment_description eq ON m.eq_no = eq.eq_no
+		WHERE 
+		    m.eq_loc IN ('LOC010', 'LOC011') and m.eq_no = #{eqNo}
+	</select>
+	
+	<!-- 공통코드 이름으로 공통코드 가져오기 -->
+	<select id="getCommonCode" parameterType="string" resultType="string">
+		select
+			code_no
+		from common_code
+		where code_name = #{codeName}
+	</select>
+	
+	<!-- 장비 update 쿼리 다시 짜기  -->
+	<update id="updateEqInfo" parameterType="equipmentVO">
+		update medical_equip
+		set
+			eq_name = #{eqName},
+			eq_company = #{eqCompany},
+			eq_loc = #{eqLoc},
+			eq_model = #{eqModel},
+			eq_status = #{eqStatus}
+		where eq_no = #{eqNo}
+	</update>
+	
+	<update id="updateEqDescription" parameterType="equipmentVO">
+		update equipment_description
+		set
+			eq_description_content = #{eqDescriptioncontent}
+		where eq_no = ${eqNo}
+	</update>
+	
+	<insert id="requestRepair" parameterType="repairRequestVO">
+		insert into equip_repair_request (
+			repair_no, eq_no, repair_person, repair_date, repair_reason
+		) values (
+			100000, #{eqNo}, #{repairPerson}, sysdate, #{repairReason}
+		)
+	</insert>
+	<!-- 코멘트 순번 관련 수정하기 -->
+	<!-- <insert id="insertComment" parameterType="String">
+		<selectKey keyProperty="commentNo" resultType="int" order="BEFORE">
+			select MIC_COMMENT_SEQ.nextval from dual
+		</selectKey>
+		<selectKey keyProperty="commentSequence" resultType="int" order="BEFORE">
+			select max(comment_sequence) + 1 as commentSeq from mic_comment
+		</selectKey>
+		insert into mic_comment (
+			comment_no, comment_content, comment_sequence
+		) values (
+			#{commentNo}, #{commentContent}, #{commentSequence}
+		)
+	</insert> -->
+</mapper>

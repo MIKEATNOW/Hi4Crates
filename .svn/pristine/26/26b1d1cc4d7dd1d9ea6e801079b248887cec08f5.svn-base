@@ -1,0 +1,23 @@
+package kr.or.ddit.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.mapper.NurseMapper;
+import kr.or.ddit.service.INurseService;
+import kr.or.ddit.vo.BedVO;
+
+@Service
+public class NurseServiceImpl implements INurseService {
+
+	@Inject
+	private NurseMapper nurseMapper;
+
+	@Override
+	public List<BedVO> getBedList() {
+		return nurseMapper.getBedList();
+	}
+}

@@ -1,0 +1,40 @@
+package kr.or.ddit.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.mapper.IMypageMapper;
+import kr.or.ddit.service.IMypageService;
+import kr.or.ddit.vo.DoctorCareerVO;
+import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.RealmVO;
+@Service
+public class MypageServiceImpl implements IMypageService {
+
+	@Inject
+	private IMypageMapper mypageMapper;
+	
+	@Override
+	public MemberVO getMyInfo(int memNo) {
+		return mypageMapper.getMyInfo(memNo);
+	}
+
+	@Override
+	public MemberVO getMemInfo(int memNo) {
+		return mypageMapper.getMyInfo(memNo);
+	}
+
+	@Override
+	public List<RealmVO> getMyRealm(int memNo) {
+		return mypageMapper.getMyRealm(memNo);
+	}
+
+	@Override
+	public List<DoctorCareerVO> getMyCareer(int memNo) {
+		return mypageMapper.getMyCareer(memNo);
+	}
+
+}

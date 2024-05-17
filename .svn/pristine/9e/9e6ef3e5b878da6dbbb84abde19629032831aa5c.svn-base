@@ -1,0 +1,37 @@
+package kr.or.ddit.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/emp/surgery")
+@Slf4j
+public class DoctorSurgeryController {
+	
+	@RequestMapping(value = "/waitlist")
+	public String getSurgeryWaitlist() {
+		log.info("getSurgeryWaitlist 실행");
+		return "surgery/waitlist";
+	}
+	
+	@RequestMapping(value = "/reserv")
+	public String reserveSurgeryRoom() {
+		log.info("reserveSurgeryRoom 실행");
+		return "surgery/reservForm";
+	}
+	
+	@RequestMapping(value = "/surgeryroom")
+	public String getSurgeryRoomReservStatus() {
+		log.info("getSurgeryRoomReservStatus 실행");
+		return "surgery/reservStatus";
+	}
+	
+	@RequestMapping(value = "/record")
+	public String getSurgicalRecords() {
+		log.info("getSurgicalRecords 실행");
+		return "surgery/surgicalrecords";
+	}
+	
+}

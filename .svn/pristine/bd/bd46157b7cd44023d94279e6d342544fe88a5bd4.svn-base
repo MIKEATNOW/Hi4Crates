@@ -1,0 +1,18 @@
+package kr.or.ddit.vo;
+
+import java.util.Date;
+
+import lombok.Data;
+
+@Data
+public class ReceiptVO {
+
+	private int receiptNo;
+	private String receiptDate;
+	private String receiptReason;
+	private String receiptStatus;
+	private int patntNo;
+	private String clnicNo;
+	private int empNo;
+	
+}

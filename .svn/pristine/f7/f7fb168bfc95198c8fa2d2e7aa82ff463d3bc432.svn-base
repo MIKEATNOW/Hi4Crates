@@ -1,0 +1,19 @@
+package kr.or.ddit.controller.admin;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/emp/adminn")
+@Slf4j
+public class MainReceiptController {
+	
+	@GetMapping("/receiptForm")
+	public String getreceiptForm() {
+		log.info("dd");
+		return "admin/receipt";
+	}
+}

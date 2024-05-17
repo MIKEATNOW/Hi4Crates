@@ -1,0 +1,32 @@
+package kr.or.ddit.vo;
+
+import org.apache.commons.io.FileUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import lombok.Data;
+
+@Data
+public class AttachmentVO {
+	
+	private int attachNo;
+	private int attachRecordno;
+	private String attachType;
+	private String attachName;
+	private Long attachSize;
+	private String attachDate;
+	private String attachPath;
+	private String attachLoc;
+	private int attachmentGroupNo;
+	private MultipartFile item;
+	
+	private int chartNo;
+	
+	public AttachmentVO() {}
+	 
+	 public AttachmentVO(MultipartFile item) {
+		 this.item = item;
+		 this.attachType = item.getContentType();
+		 this.attachSize = item.getSize();
+		 this.attachName = item.getName();
+	 }
+}

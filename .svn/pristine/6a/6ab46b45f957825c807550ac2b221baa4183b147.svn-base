@@ -1,0 +1,18 @@
+package kr.or.ddit.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.vo.MemberVO;
+
+public interface IMainAdminMapper {
+
+	//원무과 회원 등록
+	public void enrollMember(MemberVO member);
+	
+	//환자 등록
+	public void enrollPatient(MemberVO member);
+	
+	//접수시 진료가능한 의사 조회
+	public List<MemberVO> findReceiptDoctor();
+
+}

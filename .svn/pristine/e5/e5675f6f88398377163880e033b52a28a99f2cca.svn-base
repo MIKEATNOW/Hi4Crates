@@ -1,0 +1,114 @@
+package kr.or.ddit.controller.patient;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.inject.Inject;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import kr.or.ddit.service.IPatientMypageService;
+import kr.or.ddit.vo.ClinicReservationVO;
+import kr.or.ddit.vo.CounselVO;
+import kr.or.ddit.vo.EvaluationVO;
+import kr.or.ddit.vo.MemberVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/pMypage")
+@Slf4j
+public class myPageController {
+	@Inject
+	public IPatientMypageService service;
+	
+//	@PreAuthorize("hasRole('ROLE_USER')")
+	@GetMapping("/home")
+	public String myPage(Model model, MemberVO memVO) {
+		
+		// 예약리스트
+		int memNo = memVO.getMemNo();
+		log.info("###memNo" + memNo);
+		List<ClinicReservationVO> reserList = service.list(memNo);
+		for (ClinicReservationVO cc : reserList) {
+			cc.setReservDate(cc.getReservDate().split(" ")[0]+" "+cc.getReservTime());
+		}
+		System.out.println("####reserList" + reserList);
+		
+		// 최근 진료
+		ClinicReservationVO crVO = service.recentReserve(memNo);
+		log.info("###crVO" + crVO);
+		if(crVO == null) {
+			crVO = new ClinicReservationVO();
+			crVO.setReservDate("최근 진료 이력이 없습니다.");
+			
+			model.addAttribute("recentReservation", crVO);
+		}else {
+			
+			String rTime = crVO.getReservDate();
+			String[] parts = rTime.split(" "); // 공백을 기준으로 문자열을 분리
+			String datePart = parts[0]; // 날짜 부분
+			
+			String formattedTime = datePart; // 날짜와 시간을 다시 조합하여 문자열로 생성
+			crVO.setReservDate(formattedTime);
+			
+			model.addAttribute("recentReservation", crVO);
+		}
+		
+		
+		// 방문 예정일
+		ClinicReservationVO willVisit = service.willVisit(memNo);
+		log.info("###willVisit" + willVisit);
+		if(willVisit == null) {
+			willVisit = new ClinicReservationVO();
+			willVisit.setReservDate("방문 예정일이 존재하지 않습니다.");
+			model.addAttribute("willVisit", willVisit);
+		}else {
+			model.addAttribute("willVisit", willVisit);
+		}
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String currentDate = sdf.format(new Date());
+		log.info("##currentDate" + currentDate);
+		
+		model.addAttribute("currentDate", currentDate);
+		model.addAttribute("reserList", reserList);
+		
+		// 상담내역
+		List<CounselVO> CounsList = service.cList(memVO);
+		System.out.println("###CounsList찾아옴ㅋㅋ" + CounsList);
+		model.addAttribute("CounsList", CounsList);
+		
+		// 서비스 평가
+		List<EvaluationVO> EvaluList = service.eList(memVO);
+		System.out.println("###EvList" + EvaluList);
+		
+		model.addAttribute("EvaluList", EvaluList);
+		
+		return "patient/myPage";
+	}
+	
+	@PostMapping("/delClinicReserv")
+	public ResponseEntity<Boolean> delReservation(@RequestBody ClinicReservationVO clinicReservationVO,
+			Model model) {
+		System.out.println("하이ㅜㄹ~~" + clinicReservationVO);
+		boolean deleteFlag = false;
+		
+		int status = service.delCReserv(clinicReservationVO);
+		log.info("###하이루" + status);
+		
+		if(status > 0) {
+			deleteFlag = true;
+		}
+		log.info("###하이루" + deleteFlag);
+		
+		return new ResponseEntity<Boolean>(deleteFlag, HttpStatus.OK);
+	}
+	
+}

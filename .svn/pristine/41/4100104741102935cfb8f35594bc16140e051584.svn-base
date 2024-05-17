@@ -1,0 +1,9 @@
+package kr.or.ddit.mapper;
+
+import kr.or.ddit.vo.CalendarVO;
+
+public interface ICalendarMapper {
+
+	public int insertEvent(CalendarVO calendarVO);
+
+}

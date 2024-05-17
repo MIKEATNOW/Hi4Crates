@@ -1,0 +1,135 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.css">
+
+<!-- FullCalendar Moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+<!-- FullCalenar Javascript -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.js"></script>
+
+
+<!-- FullCalendar Locale -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales-all.js"></script>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-2" style="width:300px">
+                <div class="card custom-card" style="height: 790px ;">
+                    <!-- 제목 시작 -->
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            수술 대기 환자
+                        </div>
+                    </div>
+                    <div id="placeReserveList">
+                    
+                       <div class="card border custom-card"
+                                style="background-color:white;width: 250px;height: 110px;margin-left: 10px;margin-bottom: 10px; margin-top: 5px;">
+                                <div class="card-header" style="height: 30px; background-color: #f6feff !important">
+                                    <span class="fw-semibold fs-13" style="position: absolute; left: 12px; ">진료실01</span>
+                                </div>
+                                <div class="card-body p-3"
+                                    style="width: 240px;height: 110px;margin-left: 10px;margin-bottom: 10px;">
+                                    <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap"
+                                        style="">
+                                        <div class="d-inline-flex align-items-start position-relative">
+                                            <a href="profile.html" class="stretched-link"></a>
+                                            <div class="flex-grow-1">
+                                                <span class="mb-0 d-block fs-15 fw-semibold">선민수</span>
+                                                <span class="fs-13 text-muted">남성, 27세</span>
+                                            </div>
+                                        </div>
+                                        <span class="fs-10 badge rounded-pill bg-secondary">수납대기중</span>
+                                    </div>
+                                    <input type="hidden" value="'+item.receiptNo+'" />
+                                </div>
+                            </div>
+                            
+                       <div class="card border custom-card"
+                                style="background-color:white;width: 250px;height: 110px;margin-left: 10px;margin-bottom: 10px; margin-top: 5px;">
+                                <div class="card-header" style="height: 30px; background-color: #f6feff !important">
+                                    <span class="fw-semibold fs-13" style="position: absolute; left: 12px; ">진료실01</span>
+                                </div>
+                                <div class="card-body p-3"
+                                    style="width: 240px;height: 110px;margin-left: 10px;margin-bottom: 10px;">
+                                    <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap"
+                                        style="">
+                                        <div class="d-inline-flex align-items-start position-relative">
+                                            <a href="profile.html" class="stretched-link"></a>
+                                            <div class="flex-grow-1">
+                                                <span class="mb-0 d-block fs-15 fw-semibold">선민수</span>
+                                                <span class="fs-13 text-muted">남성, 27세</span>
+                                            </div>
+                                        </div>
+                                        <span class="fs-10 badge rounded-pill bg-secondary">수납대기중</span>
+                                    </div>
+                                    <input type="hidden" value="'+item.receiptNo+'" />
+                                </div>
+                            </div>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card custom-card" style="height: 790px">
+                            <div class="card-header">
+                                <div class="card-title">일정 등록</div>
+                            </div>
+                            <div class="card-body">
+								<div id="calendar" style="width:590px; height:700px;">
+								
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End::app-content -->
+<!--본문 끝-->
+
+<!-- Scroll To Top -->
+<div class="scrollToTop">
+<span class="arrow"><i class="ri-arrow-up-s-fill fs-20"></i></span>
+</div>
+<script>
+
+$(function(){
+	var calendarPersonal = '';
+	console.log("dd")
+// 	var calendarEl = $('#calendar');
+	var calendarEl = document.querySelector("#calendar");
+	console.log(calendar);
+	function loadCalendar(){
+		console.log("BB")
+		calendarPersonal = new FullCalendar.Calendar(calendarEl, {
+			
+// 		       events : res,
+		       initialView: 'dayGridMonth',
+		       headerToolbar : {				// 헤드툴바 설정
+		           left: 'prev,next,today',
+		           center: 'title',
+		           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+		       },
+		        expandRows : true,
+		        selectable : true, // 달력 일자 드래그 설정가능
+				droppable : true,	// 드롭 가능 여부 설정
+				editable : true,	// 수정 가능 여부 설정
+				nowIndicator: true, // 현재 시간 마크
+				navLinks : true,	// 링크 활성화 여부 설정
+		//     	locale: 'ko' // 한국어 설정
+				
+         });
+		
+	console.log("ㅇㅇ")
+	calendarPersonal.render();
+	console.log("ㅇ2")
+	}
+	loadCalendar();
+});
+</script>

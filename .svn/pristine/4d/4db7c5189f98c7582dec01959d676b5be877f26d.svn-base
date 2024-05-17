@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.MemberMapper">
+	<resultMap type="memberVO" id="memberMap">
+		<id property="memNo" column="MEM_NO"/>
+		<id property="memId" column="MEM_ID"/>
+		<id property="memPw" column="MEM_PW"/>
+		<id property="memEmail" column="MEM_EMAIL"/>
+		<id property="memName" column="MEM_NAME"/>
+		<id property="memAge" column="MEM_AGE"/>
+		<id property="memGender" column="MEM_GENDER"/>
+		<id property="memRegno1" column="MEM_REGNO1"/>
+		<id property="memRegno2" column="MEM_REGNO2"/>
+		<id property="memTel" column="MEM_TEL"/>
+		<id property="memAddtel" column="MEM_ADDTEL"/>
+		<id property="memAddress1" column="MEM_ADDRESS1"/>
+		<id property="memAddress2" column="MEM_ADDRESS2"/>
+		<id property="memSignupDate" column="MEM_SIGNUP_DATE"/>
+		<id property="memType" column="MEM_TYPE"/>
+		<id property="memSocial" column="MEM_SOCIAL"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap type="memberAuth" id="authMap">
+		<result property="authNo" column="auth_no"/>
+		<result property="memNo" column="mem_no"/>
+		<result property="authName" column="auth_name"/>
+	</resultMap>
+	
+	<select id="readByUserId" parameterType="string" resultMap="memberMap">
+		select 
+		m.mem_no, mem_id, mem_pw, mem_name, mem_signup_date, a.auth_name
+		from member m left outer join auth a on(m.mem_no = a.mem_no)
+		where mem_id = #{memId}
+	</select>
+
+
+
+	<insert id="signup" parameterType="memberVO">
+	INSERT INTO MEMBER(
+	    MEM_NO, MEM_ID, MEM_PW, MEM_EMAIL, MEM_NAME,
+	    MEM_AGE, MEM_GENDER, MEM_REGNO1, MEM_REGNO2,
+	    MEM_TEL,MEM_ADDTEL, MEM_ADDRESS1, MEM_ADDRESS2,
+	    MEM_SIGNUP_DATE, MEM_TYPE, MEM_SOCIAL
+	    )
+    VALUES
+    	(
+    member_seq.nextval, #{memId}, #{memPw}, #{memEmail}, #{memName},
+    #{memAge},#{memGender}, #{memRegno1}, #{memRegno2}, #{memTel},#{memAddtel}, #{memAddress1},#{memAddress2},
+    SYSDATE, 'MT001', 'N'
+    	)
+	</insert>
+	
+	<select id="checkId" resultType="int">
+		select count(*) from member where mem_ID = #{checkId}
+	</select>
+</mapper>

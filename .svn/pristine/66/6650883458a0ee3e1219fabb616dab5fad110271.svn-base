@@ -1,0 +1,41 @@
+package kr.or.ddit.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/emp/notice")
+@Slf4j
+public class EmpNoticeController {
+
+	// 리턴할 때 tiles는 main/ 으로 시작하기
+	@RequestMapping(value = "/list")
+	public String getEmpNoticeList () {
+		log.info("getEmpNoticeList 실행");
+		return "empNotice/list";
+	}
+	
+	
+	@GetMapping("/form")
+	public String getEmpNoticeForm () {
+		log.info("getEmpNoticeForm 실행");
+		return "empNotice/register";
+	}
+	
+		
+	@PostMapping("/form.do")
+	public String registerEmpNotice (Model model) {
+		log.info("registerEmpNotice 실행");
+		return "empNotice/list";
+	}
+	
+	
+	
+
+	
+}

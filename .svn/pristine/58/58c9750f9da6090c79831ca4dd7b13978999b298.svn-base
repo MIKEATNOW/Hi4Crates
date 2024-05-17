@@ -1,0 +1,36 @@
+package kr.or.ddit.controller.admin;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/emp/admin")
+@Slf4j
+public class MainReceiptController {
+	//접수
+	@GetMapping("/receiptForm")
+	public String getreceiveForm() {
+		log.info("dd");
+		return "admin/receipt";
+	}
+	
+	//원무과 메인
+	@GetMapping("/main")
+	public String getMain() {
+		log.info("dd");
+		return "admin/empmain";
+	}
+	
+	//수납 (접수 연습하던거임 이거 내일 다시 수정)
+	@GetMapping("/receiveForm")
+	public String getreceiptForm() {
+		log.info("dd");
+		return "admin/receive";
+	}
+	
+	
+	
+}

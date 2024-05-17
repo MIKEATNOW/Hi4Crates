@@ -1,0 +1,27 @@
+package kr.or.ddit.controller.doctor;
+
+import javax.inject.Inject;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import kr.or.ddit.service.IDoctorMeetingService;
+import kr.or.ddit.vo.MeetingVO;
+
+@Controller
+public class DoctorMeetingController {
+
+	@Inject
+	private IDoctorMeetingService doctorMeetingService;
+	
+	@PostMapping("insertMeetingRecord")
+	public ResponseEntity<Boolean> insertMeetingRecord(@RequestBody MeetingVO meetingVO) {
+		
+		boolean flag = doctorMeetingService.insertMeetingRecord(meetingVO);
+		
+		return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+	}
+}

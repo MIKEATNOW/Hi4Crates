@@ -1,0 +1,71 @@
+package kr.or.ddit.service.impl;
+
+import java.util.Calendar;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.ServiceResult;
+import kr.or.ddit.mapper.MemberMapper;
+import kr.or.ddit.service.ILoginService;
+import kr.or.ddit.vo.MemberVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Service
+public class LoginServiceImpl implements ILoginService {
+	
+	@Inject
+	public PasswordEncoder pe;
+	
+	@Inject
+	public MemberMapper testMapper;
+	
+	@Override
+	public ServiceResult signup(MemberVO tm, HttpServletRequest req) {
+		tm.setMemPw(pe.encode(tm.getMemPw()));
+		tm.setMemRegno1(tm.getMemRegno().split("-")[0]);
+		tm.setMemRegno2(tm.getMemRegno().split("-")[1]);
+		
+		int checkRegno = Integer.parseInt(tm.getMemRegno2().substring(0,1));
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		log.info(year+"");
+		int age = 0;
+		if(checkRegno ==1 || checkRegno ==2) {
+			age = Integer.parseInt(tm.getMemRegno1().substring(0,2));
+			age = age + 1900;
+			age = year - age + 1;
+			if(checkRegno == 1) tm.setMemGender("남성");
+			if(checkRegno == 2) tm.setMemGender("여성");
+		}else if(checkRegno ==3 || checkRegno == 4) {
+			age = Integer.parseInt(tm.getMemRegno1().substring(0,2));
+			age = age + +2000;
+			age = year - age + 1;
+			if(checkRegno == 3) tm.setMemGender("남성");
+			if(checkRegno == 4) tm.setMemGender("여성");
+		}
+		tm.setMemAge(age);
+		
+		log.info(tm.getMemGender());
+		log.info(tm.getMemTel());
+		
+		int result = testMapper.signup(tm);
+		
+		if(result > 0 ) return ServiceResult.OK;
+		else return ServiceResult.FAILED;
+	}
+
+	@Override
+	public ServiceResult checkId(String checkId) {
+		
+		int result = testMapper.checkId(checkId);
+		
+		if(result > 0) return ServiceResult.FAILED;
+		else return ServiceResult.OK;
+	}
+
+}

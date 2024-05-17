@@ -1,0 +1,13 @@
+package kr.or.ddit.service;
+
+import java.util.List;
+
+import kr.or.ddit.vo.CommentVO;
+import kr.or.ddit.vo.RadiationRoomVO;
+
+public interface IRadiationService {
+
+	public List<CommentVO> getCommentList();
+	public List<RadiationRoomVO> getRadiationRoomList();
+
+}

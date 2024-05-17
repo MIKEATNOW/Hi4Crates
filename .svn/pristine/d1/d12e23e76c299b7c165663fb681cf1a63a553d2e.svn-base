@@ -1,0 +1,28 @@
+package kr.or.ddit.mapper;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+import kr.or.ddit.vo.ChartVO;
+import kr.or.ddit.vo.MedicineVO;
+import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.OrderVO;
+
+public interface MainChartMapper {
+
+	public List<MemberVO> getWatingList(int empNo);
+
+	public List<ChartVO> getPatientChart(int memNo);
+
+	public MemberVO patientPreview(int memNo);
+
+	public int orderRadiation(OrderVO orderVO);
+
+	public int createChart(ChartVO chartVO);
+
+	public List<MedicineVO> getMedicineList(int chartNo);
+
+
+}

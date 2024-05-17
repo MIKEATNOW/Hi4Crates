@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.MainChartMapper">
+
+	
+
+	<select id="getWatingList" parameterType="int" resultType="memberVO">
+	
+	select m.mem_no, m.mem_name, m.mem_gender, m.mem_age, c.code_name, cc.code_name as ccodeName
+			from member m, patient p, receipt r, history h, common_code c, common_code cc
+		where m.mem_no = p.mem_no 
+			and r.receipt_status = 'RS001' 
+			and p.patnt_no = r.patnt_no
+			and h.receipt_no = r.receipt_no
+			and c.code_no = history_loc
+            and cc.code_no = history_status
+			and r.emp_no = #{empNo}
+			
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.mapper.IDoctorMeetingMapper">
+
+	<insert id="insertMeetingRecord" parameterType="meetingVO">
+		INSERT INTO meeting (
+		    meeting_no
+		    , meeting_date
+		    , meeting_start_time
+		    , meeting_end_time
+		    , meeting_starter
+		) VALUES (
+		    meeting_seq.nextval
+		    , #{meetingDate}
+		    , #{meetingStarttime}
+		    , #{meetingEndtime}
+		    , #{meetingStarter}
+		);
+	</insert>
+
+</mapper>

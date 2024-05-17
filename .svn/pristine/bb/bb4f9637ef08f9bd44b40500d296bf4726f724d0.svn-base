@@ -1,0 +1,88 @@
+package kr.or.ddit.controller;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import kr.or.ddit.ServiceResult;
+import kr.or.ddit.service.IEmpSurgeryService;
+import kr.or.ddit.vo.PaginationVO;
+import kr.or.ddit.vo.SurgeryReservationVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequestMapping("/emp/surgery")
+@Slf4j
+public class DoctorSurgeryController {
+
+	@Inject
+	private IEmpSurgeryService surgeryService;
+	
+	@GetMapping("/reservForm")
+	public String getSurgeryReservForm() {
+		log.info("getSurgeryReservForm 실행");
+		return "empSurgery/reservForm";
+	}
+
+	@PostMapping("/reservSurgery")
+	public String registerSurgeryReserv (
+			SurgeryReservationVO surgeryReservVO,
+			Model model
+			) {
+		log.info("registerSurgeryReserv 실행");
+		String goPage = "";
+		
+		ServiceResult result = surgeryService.insertSurgeryReserv(surgeryReservVO);
+		
+		if(result.equals(ServiceResult.OK)) {
+			goPage = "redirect:/emp/surgery/reservList";
+		}else {
+			goPage = "empSurgery/waitlist";
+		}
+		return goPage;
+	}
+	
+	
+	@RequestMapping(value = "/reservList")
+	public String getSurgeryWaitlist(
+			@RequestParam(name="page", required = false, defaultValue = "1") int currentPage,
+			Model model
+			) {
+		log.info("getSurgeryWaitlist 실행");
+		PaginationVO<SurgeryReservationVO> pagingVO = 
+				new PaginationVO<SurgeryReservationVO>();
+		
+		// 검색 기능 추가 자리
+		
+		pagingVO.setCurrentPage(currentPage);
+		int totalRecord = surgeryService.getSurgeryReservCount(pagingVO);
+		pagingVO.setTotalRecord(totalRecord);
+		
+		List<SurgeryReservationVO> dataList = 
+				surgeryService.getSurgeryReservList(pagingVO);
+		pagingVO.setDataList(dataList);
+		
+		model.addAttribute("pagingVO", pagingVO);
+		return "empSurgery/waitlist";
+	}
+	
+	@RequestMapping(value = "/surgeryRoom")
+	public String getSurgeryRoomReservStatus() {
+		log.info("getSurgeryRoomReservStatus 실행");
+		return "empSurgery/reservStatus";
+	}
+	
+	@RequestMapping(value = "/surgeryRecord")
+	public String getSurgicalRecords() {
+		log.info("getSurgicalRecords 실행");
+		return "empSurgery/surgicalrecords";
+	}
+	
+}

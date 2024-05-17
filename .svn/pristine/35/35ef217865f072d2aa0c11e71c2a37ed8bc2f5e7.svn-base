@@ -1,0 +1,12 @@
+package kr.or.ddit.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.vo.CommentVO;
+import kr.or.ddit.vo.RadiationRoomVO;
+
+public interface RadiationMapper {
+	public List<CommentVO> getCommentList();
+	public List<RadiationRoomVO> getRadiationRoomList();
+	public RadiationRoomVO getRadiationRoomInfo(int roomNo);
+}

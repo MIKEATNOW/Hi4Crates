@@ -1,0 +1,45 @@
+package kr.or.ddit.controller.admin;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import kr.or.ddit.service.IMypageService;
+import kr.or.ddit.vo.DoctorCareerVO;
+import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.RealmVO;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class ProfileController {
+	@Inject
+	private IMypageService mypageService; 
+	
+	@GetMapping("/myprofile/{memNo}")
+	public String myProfile(@PathVariable int memNo, Model model) {
+		MemberVO member = new MemberVO();
+		
+//		try {
+//			member = mypageService.getMyInfo(memNo);
+//			log.info(member.getRealmList().get(0).getRealmName());
+//			log.info(member.getEmpJob());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
+		member = mypageService.getMemInfo(memNo);
+		List<RealmVO> realmList = mypageService.getMyRealm(memNo);
+		List<DoctorCareerVO> careerList = mypageService.getMyCareer(memNo);
+		
+		model.addAttribute("member", member);
+		model.addAttribute("realmList", realmList);
+		model.addAttribute("careerList", careerList);
+		return "main/admin/myprofile";
+	}
+}

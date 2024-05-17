@@ -1,0 +1,38 @@
+package kr.or.ddit.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.mapper.MainChartMapper;
+import kr.or.ddit.service.IMainChartService;
+import kr.or.ddit.vo.ChartVO;
+import kr.or.ddit.vo.MemberVO;
+
+@Service
+public class MainChartServiceImpl implements IMainChartService {
+	
+	@Inject
+	MainChartMapper mapper;
+
+	@Override
+	public List<MemberVO> getWatingList(int empNo) {
+		
+		return mapper.getWatingList(empNo);
+	}
+
+	@Override
+	public List<ChartVO> getPatientChart(int memNo) {
+		
+		return mapper.getPatientChart(memNo);
+	}
+
+	@Override
+	public MemberVO patientPreview(int memNo) {
+		return mapper.patientPreview(memNo);
+	}
+
+}

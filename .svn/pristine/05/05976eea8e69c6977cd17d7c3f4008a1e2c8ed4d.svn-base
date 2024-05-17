@@ -1,0 +1,13 @@
+package kr.or.ddit.mapper;
+
+import java.util.List;
+
+import kr.or.ddit.vo.BedVO;
+import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.OrderVO;
+
+public interface NurseMapper {
+	public List<BedVO> getBedList();
+	public List<MemberVO> getHospitalizeList();
+	public OrderVO getPatntOrder(int patntNo);
+}

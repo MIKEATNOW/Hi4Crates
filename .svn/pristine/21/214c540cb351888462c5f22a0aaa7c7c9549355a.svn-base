@@ -1,0 +1,17 @@
+package kr.or.ddit.vo;
+
+import lombok.Data;
+
+@Data
+public class ClinicReservationVO {
+	private int reservNo;
+	private String reservDate;
+	private String reservTime;
+	private String reservMemo;
+	
+	
+	
+	private int empNo;
+	private int memNo;
+	
+}

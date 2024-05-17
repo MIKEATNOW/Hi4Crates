@@ -1,0 +1,37 @@
+package kr.or.ddit.vo;
+
+import java.util.List;
+
+import lombok.Data;
+
+@Data
+public class MemberVO {
+	private int memNo;
+	private String memId;
+	private String memPw;
+	private String memPw2;
+	private String memEmail;
+	private String memName;
+	private int memAge;
+	private String memGender;
+	private String memRegno;
+	private String memRegno1;
+	private String memRegno2;
+	private String memTel;
+	private String memAddtel;
+	private String postCode;
+	private String memAddress1;
+	private String memAddress2;
+	private String memSignupDate;
+	private String memType;
+	private String memSocial;
+	private String empJob;
+	
+	private List<MemberAuth> authList;
+	
+	//대기환자불러오기 위한 컬럼 추가
+	private String codeName;
+	private String ccodeName;
+		
+
+}

@@ -1,0 +1,29 @@
+package kr.or.ddit.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+
+import kr.or.ddit.mapper.RadiationMapper;
+import kr.or.ddit.service.IRadiationService;
+import kr.or.ddit.vo.CommentVO;
+import kr.or.ddit.vo.RadiationRoomVO;
+
+@Service
+public class RadiationServiceImpl implements IRadiationService{
+	
+	@Inject
+	private RadiationMapper radiationMapper;
+
+	@Override
+	public List<CommentVO> getCommentList() {
+		return radiationMapper.getCommentList();
+	}
+
+	@Override
+	public List<RadiationRoomVO> getRadiationRoomList() {
+		return radiationMapper.getRadiationRoomList();
+	}
+}
