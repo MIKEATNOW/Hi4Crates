@@ -32,12 +32,12 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 @Slf4j
 public class bookController {
 	
-	final DefaultMessageService messageService;
+//	final DefaultMessageService messageService;
 	
-	public bookController() {
-        // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
-        this.messageService = NurigoApp.INSTANCE.initialize("", "", "https://api.coolsms.co.kr");
-    }
+//	public bookController() {
+//        // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
+//        this.messageService = NurigoApp.INSTANCE.initialize("NCSP0YUO6D4XVFA3", "PQPE4LVBCQ6VSJHMTKQKAWQWI8MUDDR6", "https://api.coolsms.co.kr");
+//    }
 	
 	@Inject
 	private IPatientBookService service;
@@ -120,19 +120,19 @@ public class bookController {
 	    		+ "문의사항이 있으시면 연락바랍니다. 감사합니다. 담당 주치의 : " + doctor;
 	    log.info("###content" + content);
 	    
-	    if (status > 0) {    // insert에 성공했다면
-	        // flag값을 true로 변경
-	    	// coolSMS 실행
-	    	Message message = new Message();
-	        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
-	        message.setFrom("");	// 발신번호
-	        message.setTo(phone);	// 수신번호
-	        message.setText(content);
-	        
-	        // 메시지를 전송하고 응답을 저장
-	        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-	        System.out.println(response);
-	    }
+//	    if (status > 0) {    // insert에 성공했다면
+//	        // flag값을 true로 변경
+//	    	// coolSMS 실행
+//	    	Message message = new Message();
+//	        // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+//	        message.setFrom("01050645042");	// 발신번호
+//	        message.setTo(phone);	// 수신번호
+//	        message.setText(content);
+//	        
+//	        // 메시지를 전송하고 응답을 저장
+//	        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+//	        System.out.println(response);
+//	    }
 	    
 
 	    return "redirect:/pMypage/home?memNo="+clinicReservationVO.getMemNo();

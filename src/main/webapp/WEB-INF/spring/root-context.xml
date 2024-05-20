@@ -22,7 +22,7 @@
 	
 	<!-- 카카오로그인 API -->
 	<bean id="client_id" class="java.lang.String">
-		<constructor-arg value="7fe9836832cab3da406e63d611f2092b"/>
+		<constructor-arg value=""/>
 	</bean>
 	
 	<bean id="redirect_uri" class="java.lang.String">
